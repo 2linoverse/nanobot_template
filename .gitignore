@@ -1,0 +1,16 @@
+# nanobot memory files
+memory/
+
+# nanobot cron jobs
+cron/
+
+# nanobot webui files
+.nanobot/webui/
+
+# nanobot session history
+sessions/
+
+AGENTS.md
+HEARTBEAT.md
+SOUL.md
+USER.md

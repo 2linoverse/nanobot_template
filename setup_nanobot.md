@@ -9,7 +9,7 @@ step 0:
 
 step 1:
 
-`pip install nanobot-ai`
+```pip install nanobot-ai```
 
 
 step 2:
@@ -29,10 +29,22 @@ step 3.5:
   - select provider
   - for ollama cloud, select custom / other OpenAI compatible provider
   - enter api .env variable key: `${YOUR_ENV_VARIABLE}`
-  - enter ollama cloud url: `https://ollama.com/v1`
+  - enter ollama cloud url:
+    ```
+    https://ollama.com/v1
+    ```
   - enter provider specific model name
   - ex:
-  - ```nemotron-3-nano:30b-cloud```
+    ```
+    nemotron-3-nano:30b-cloud
+    ```
+
+    or
+
+    ```
+    gemma4:31b-cloud
+    ```
+    
 
   - enable gateway
   - enter a password for gateway access
@@ -77,6 +89,12 @@ cron/
 
 # nanobot session history
 sessions/
+
+# nanobot personality files
+AGENTS.md
+HEARTBEAT.md
+SOUL.md
+USER.md
 ```
 
 step 6:
