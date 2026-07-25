@@ -1,1 +1,17 @@
 modules = ["python-3.11"]
+
+run = "nanobot gateway --workspace /home/runner/workspace --config /home/runner/workspace/.nanobot/config.json"
+
+[workflows]
+
+[[workflows.workflow]]
+name = "Run Nanobot Gateway"
+mode = "sequential"
+author = 62724248
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "nanobot gateway --workspace /home/runner/workspace --config /home/runner/workspace/.nanobot/config.json"
+
+[nix]
+packages = ["nano"]
