@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nanobot Setup Guide</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 10px;
+        }
+        .step {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .step-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+        video {
+            width: 100%;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            background: #000;
+        }
+        pre {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: "Courier New", Courier, monospace;
+        }
+        code {
+            background: #eee;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .instruction {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Nanobot Setup Guide</h1>
+
+    <div class="step">
+        <div class="step-title">Step 0: API Keys</div>
+        <video controls>
+            <source src="videos/00_get_ollama_key.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="instruction">
+            <ul>
+                <li>Get AI LLM inference provider account / API keys</li>
+                <li>Example: <a href="https://ollama.com/">https://ollama.com/</a></li>
+                <li>Sign in</li>
+                <li>Go to settings &rarr; keys &rarr; create API key</li>
+                <li>Enter the name for the key &rarr; generate API key &rarr; copy to clipboard</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="step">
+        <div class="step-title">Step 1: Installation</div>
+        <video controls>
+            <source src="videos/01_install_nanobot.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <pre>pip install nanobot-ai</pre>
+    </div>
+
+    <div class="step">
+        <div class="step-title">Step 2: Secrets Configuration</div>
+        <video controls>
+            <source src="videos/02_set_ollama_key.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="instruction">
+            <ul>
+                <li>Open the secrets tab &rarr; click new secret</li>
+                <li>Enter a name for the key &rarr; paste the key you just copied from Ollama &rarr; click add secret</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="step">
+        <div class="step-title">Step 3: Onboarding</div>
+        <video controls>
+            <source src="videos/03_onboard_nanobot.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="instruction">
+            Start the nanobot setup wizard with parameters to set the default workspace directory and default config file. Otherwise, it will be set in <code>/home/runner</code>, and we want it in <code>/home/runner/workspace</code>.
+        </div>
+        <pre>nanobot onboard --workspace /home/runner/workspace --config /home/runner/workspace/.nanobot/config.json --wizard</pre>
+        <div class="instruction">
+            <strong>Step 3.5: Provider Setup</strong>
+            <ul>
+                <li>Select provider</li>
+                <li>For Ollama Cloud, select custom / other OpenAI compatible provider</li>
+                <li>Enter API .env variable key: <code>${YOUR_ENV_VARIABLE}</code></li>
+                <li>Enter Ollama Cloud URL: <code>https://ollama.com/v1</code></li>
+                <li>Enter provider specific model name (e.g., <code>nemotron-3-nano:30b-cloud</code> or <code>gemma4:31b-cloud</code>)</li>
+                <li>Enable gateway</li>
+                <li>Enter a password for gateway access</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="step">
+        <div class="step-title">Step 4: Web UI Port</div>
+        <video controls>
+            <source src="videos/04_run_nanobot.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="instruction">
+            Change web UI port so Replit routes it properly in <code>.nanobot/config.json</code>:
+        </div>
+        <pre>
+"websocket": {
+  "enabled": true,
+  "host": "0.0.0.0",
+  "port": 5000,
+  "unixSocketPath": "",
+  "path": "/",
+  "token": "",
+}</pre>
+        <div class="instruction">
+            <strong>Step 4.5: Start Gateway</strong>
+            Start the nanobot gateway with this command:
+        </div>
+        <pre>nanobot gateway --workspace /home/runner/workspace --config /home/runner/workspace/.nanobot/config.json</pre>
+        <p><em>(Enter the password you set during the nanobot setup wizard)</em></p>
+    </div>
+
+    <div class="step">
+        <div class="step-title">Step 5: Gitignore</div>
+        <video controls>
+            <source src="videos/05_gitignore_file.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="instruction">
+            Add the following to your <code>.gitignore</code>:
+        </div>
+        <pre>
+# nanobot memory files
+memory/
+
+# nanobot cron jobs
+cron/
+
+# nanobot webui files
+.nanobot/webui/
+
+# nanobot session history
+sessions/
+
+# nanobot personality files
+AGENTS.md
+HEARTBEAT.md
+SOUL.md
+USER.md</pre>
+    </div>
+
+    <div class="step">
+        <div class="step-title">Step 6: Replit Workflow</div>
+        <video controls>
+            <source src="videos/06_replit_workflow_setup.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="instruction">
+            Set Replit workflow command to:
+        </div>
+        <pre>nanobot gateway --workspace /home/runner/workspace --config /home/runner/workspace/.nanobot/config.json</pre>
+        <div class="instruction">
+            <ul>
+                <li>Workflows tab &rarr; click new workflow &rarr; name it 'run' &rarr; select 'execute shell command' &rarr; paste the command above.</li>
+            </ul>
+            <p>Now you can just click the run button instead of pasting that into shell every time.</p>
+        </div>
+    </div>
+
+</body>
+</html>
